@@ -3,7 +3,7 @@ package com.esen.soa.motanrpc.hello.impl;
 import com.esen.soa.motanrpc.api.HelloService;
 import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
-@MotanService(export = "8002")
+@MotanService
 public class HelloServiceImpl implements HelloService {
 
 	@Override
