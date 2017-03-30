@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:motan="http://api.weibo.com/schema/motan"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+   http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
+
+	<motan:annotation package="com.esen.soa.motanrpc" />
+	<!-- service implemention bean -->
+	<motan:registry regProtocol="zookeeper" name="my_zookeeper" address="127.0.0.1:2181" />
+	<motan:protocol name="motan"></motan:protocol>
+	<motan:basicService export="8002"></motan:basicService>
+</beans>
