@@ -7,12 +7,16 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<motan:annotation package="com.esen.soa.motanrpc.hello.test" />
-	
+
 	<context:property-placeholder location="classpath:server.properties" />
-	
-	<motan:registry regProtocol="direct" address="${server.address}:${server.port}" name="motanDemo" />
-	
+
+	<motan:registry regProtocol="direct" address="${server.address}" port="${server.port}" name="motanRegistry" />
+
 	<motan:protocol default="true" name="motan" />
-	
-	<motan:basicReferer protocol="motan" registry="motanDemo" throwException="true" check="true" />
+
+	<!-- 通用配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池。export格式为“protocol id:提供服务的端口” -->
+	<motan:basicService export="motan:${server.port}" registry="motanRegistry" />
+
+	<motan:basicReferer id="clientBasicConfig" protocol="motan" registry="motanRegistry" throwException="true"
+		check="true" />
 </beans>

@@ -8,11 +8,15 @@
 
 	<motan:annotation package="com.esen.soa.motanrpc" />
 	<context:property-placeholder location="classpath:server.properties" />
-	<!-- service implemention bean -->
 	<!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。如果不使用注册中心，可以把check属性改为false，忽略注册失败。 -->
-	<motan:registry regProtocol="local" name="registry" check="false" />
+	<motan:registry regProtocol="local" name="motanRegistry" check="false" />
+
 	<!-- 协议配置。为防止多个业务配置冲突，推荐使用id表示具体协议。 -->
-	<motan:protocol id="motan" name="motan" default="true"></motan:protocol>
+	<motan:protocol id="motan" name="motan" default="true" />
+
 	<!-- 通用配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池。export格式为“protocol id:提供服务的端口” -->
-	<motan:basicService export="motan:${server.port}" registry="registry"></motan:basicService>
+	<motan:basicService export="motan:${server.port}" registry="motanRegistry" />
+
+	<motan:basicReferer id="clientBasicConfig" protocol="motan" registry="motanRegistry" throwException="true"
+		check="true" />
 </beans>

@@ -14,6 +14,9 @@ public class HelloServiceTest {
 	@MotanReferer
 	private HelloService helloService;
 
+	/**
+	 * 测试
+	 */
 	@Test
 	public void testCall() {
 		int cnt = 1000;
