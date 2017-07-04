@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:motan="http://api.weibo.com/schema/motan"
+	xmlns:motan="http://api.weibo.com/schema/motan" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-   http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
+   http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd
+   http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<motan:annotation package="com.esen.soa.motanrpc" />
+	<context:property-placeholder location="classpath:server.properties" />
 	<!-- service implemention bean -->
-	<motan:registry regProtocol="zookeeper" name="my_zookeeper" address="127.0.0.1:2181" />
-	<motan:protocol name="motan"></motan:protocol>
-	<motan:basicService export="8002"></motan:basicService>
+	<!-- 注册中心配置 使用不同注册中心需要依赖对应的jar包。如果不使用注册中心，可以把check属性改为false，忽略注册失败。 -->
+	<motan:registry regProtocol="local" name="registry" check="false" />
+	<!-- 协议配置。为防止多个业务配置冲突，推荐使用id表示具体协议。 -->
+	<motan:protocol id="motan" name="motan" default="true"></motan:protocol>
+	<!-- 通用配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池。export格式为“protocol id:提供服务的端口” -->
+	<motan:basicService export="motan:${server.port}" registry="registry"></motan:basicService>
 </beans>

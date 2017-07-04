@@ -6,7 +6,6 @@ import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 @MotanService
 public class HelloServiceImpl implements HelloService {
 
-	@Override
 	public String sayHello(String msg) {
 		return "hello" + msg;
 	}

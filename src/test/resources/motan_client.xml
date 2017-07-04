@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:motan="http://api.weibo.com/schema/motan"
+	xmlns:motan="http://api.weibo.com/schema/motan" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-   http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
+   http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd
+   http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<motan:annotation package="com.esen.soa.motanrpc.hello.test" />
-	<motan:registry regProtocol="zookeeper" name="my_zookeeper" address="127.0.0.1:2181" />
+	
+	<context:property-placeholder location="classpath:server.properties" />
+	
+	<motan:registry regProtocol="direct" address="${server.address}:${server.port}" name="motanDemo" />
+	
+	<motan:protocol default="true" name="motan" />
+	
+	<motan:basicReferer protocol="motan" registry="motanDemo" throwException="true" check="true" />
 </beans>

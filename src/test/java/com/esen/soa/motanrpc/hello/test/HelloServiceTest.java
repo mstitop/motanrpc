@@ -16,8 +16,11 @@ public class HelloServiceTest {
 
 	@Test
 	public void testCall() {
+		int cnt = 1000;
 		long start = System.currentTimeMillis();
-		System.err.println(helloService.sayHello("sam"));
+		helloService.sayHello("sam");
+		System.err.println("cost:" + (System.currentTimeMillis() - start));
+		helloService.sayHello("sam");
 		System.err.println("cost:" + (System.currentTimeMillis() - start));
 	}
 }
